@@ -1,11 +1,21 @@
 import { useState } from 'react';
 import Button from '../../ui/Button';
+import { useDispatch } from 'react-redux';
+import { updateName } from './userSlice.js';
+import { useNavigate } from 'react-router-dom';
 
 const CreateUser = () => {
+  // It's bad practice to connect an input field to the redux store
   const [username, setUsername] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!username) return;
+    dispatch(updateName(username));
+    navigate('/menu');
   };
 
   return (
